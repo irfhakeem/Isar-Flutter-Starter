@@ -3,37 +3,42 @@ import 'package:isar_flutter_starter/data/models/user.dart';
 import 'package:isar_flutter_starter/helpers/config/db.dart';
 
 class UserRepository {
-  Future<List<User>> getAppointments() async {
+  Stream<List<User>> getUsersStream() async* {
+    final isar = await DB().db;
+    yield* isar.users.where().watch(fireImmediately: true);
+  }
+
+  Future<List<User>> getUser() async {
     final isar = await DB().db;
     return await isar.users.where().findAll();
   }
 
-  Future<User> getAppointmentById(int id) async {
+  Future<User> getUserById(int id) async {
     final isar = await DB().db;
     return await isar.users.where().idEqualTo(id).findFirst() ??
         (throw Exception("User id $id tidak ada"));
   }
 
-  Future<User> createAppointment(User appointment) async {
+  Future<User> createUser(User user) async {
     final isar = await DB().db;
-    await isar.writeTxn(() => isar.users.put(appointment));
-    return appointment;
+    await isar.writeTxn(() => isar.users.put(user));
+    return user;
   }
 
-  Future<User> updateAppointment(User appointment) async {
+  Future<User> updateUser(User user) async {
     final isar = await DB().db;
     await isar.writeTxn(() async {
-      final existingAppointment = await isar.users.get(appointment.id);
-      if (existingAppointment != null) {
-        await isar.users.put(appointment);
+      final existingUser = await isar.users.get(user.id);
+      if (existingUser != null) {
+        await isar.users.put(user);
       } else {
-        throw Exception("User id ${appointment.id} tidak ada");
+        throw Exception("User id ${user.id} tidak ada");
       }
     });
-    return appointment;
+    return user;
   }
 
-  Future<void> deleteAppointment(int id) async {
+  Future<void> deleteUser(int id) async {
     final isar = await DB().db;
     await isar.writeTxn(() => isar.users.delete(id));
   }

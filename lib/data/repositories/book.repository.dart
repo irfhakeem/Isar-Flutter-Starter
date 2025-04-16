@@ -3,6 +3,11 @@ import 'package:isar_flutter_starter/data/models/book.dart';
 import 'package:isar_flutter_starter/helpers/config/db.dart';
 
 class BookRepository {
+  Stream<List<Book>> getBooksStream() async* {
+    final isar = await DB().db;
+    yield* isar.books.where().watch(fireImmediately: true);
+  }
+
   Future<List<Book>> getBooks() async {
     final isar = await DB().db;
     return await isar.books.where().findAll();

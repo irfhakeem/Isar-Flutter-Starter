@@ -1,4 +1,5 @@
 import 'package:isar/isar.dart';
+import 'package:isar_flutter_starter/data/models/book.dart';
 import 'package:isar_flutter_starter/data/models/user.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -16,7 +17,7 @@ class DB {
     final dir = await getApplicationDocumentsDirectory();
 
     if (Isar.instanceNames.isEmpty) {
-      return await Isar.open([UserSchema], directory: dir.path);
+      return await Isar.open([UserSchema, BookSchema], directory: dir.path);
     }
 
     return Future.value(Isar.getInstance());

@@ -2,19 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:isar_flutter_starter/data/models/book.dart';
-import 'package:isar_flutter_starter/data/repositories/book.repositories.dart';
-import 'package:isar_flutter_starter/presentation/screen/authorScreen.dart';
+import 'package:isar_flutter_starter/data/repositories/book.repository.dart';
+import 'package:isar_flutter_starter/presentation/screen/detailAuthor.screen.dart';
 
-class Bookscreen extends StatefulWidget {
+class Detailbookscreen extends StatefulWidget {
   final int id;
 
-  const Bookscreen({super.key, required this.id});
+  const Detailbookscreen({super.key, required this.id});
 
   @override
-  State<Bookscreen> createState() => _BookscreenState();
+  State<Detailbookscreen> createState() => _DetailbookscreenState();
 }
 
-class _BookscreenState extends State<Bookscreen> {
+class _DetailbookscreenState extends State<Detailbookscreen> {
   Book? book;
 
   Future<Book> getBook() async {
@@ -50,7 +50,8 @@ class _BookscreenState extends State<Bookscreen> {
                           context,
                           MaterialPageRoute(
                             builder:
-                                (context) => Authorscreen(id: book!.authorId),
+                                (context) =>
+                                    Detailauthorscreen(id: book!.authorId),
                           ),
                         );
                       },

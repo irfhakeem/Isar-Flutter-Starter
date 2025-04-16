@@ -1,17 +1,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:isar_flutter_starter/presentation/screen/bookScreen.dart';
+import 'package:isar_flutter_starter/presentation/screen/detailBook.screen.dart';
 
-class MyCard extends StatelessWidget {
+class BookCard extends StatelessWidget {
   final int id;
   final String cover;
   final String title;
   final String author;
-  final String yearPublished;
+  final int yearPublished;
   final String genre;
 
-  const MyCard({
+  const BookCard({
     super.key,
     required this.id,
     required this.cover,
@@ -38,18 +38,28 @@ class MyCard extends StatelessWidget {
           // Navigate to Bookscreen
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Bookscreen(id: id)),
+            MaterialPageRoute(builder: (context) => Detailbookscreen(id: id)),
           );
         },
-        child: Card(
-          color: genreColor[genre] ?? Colors.grey,
+        child: Container(
+          padding: const EdgeInsets.all(8.0),
+          margin: const EdgeInsets.all(8.0),
           child: Column(
             children: [
               Image.file(File(cover)),
               Text(title, style: const TextStyle(fontSize: 20)),
               Text(author, style: const TextStyle(fontSize: 16)),
-              Text(yearPublished, style: const TextStyle(fontSize: 14)),
-              Text(genre, style: const TextStyle(fontSize: 12)),
+              Text(
+                yearPublished.toString(),
+                style: const TextStyle(fontSize: 14),
+              ),
+              Text(
+                genre,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: genreColor[genre] ?? Colors.grey,
+                ),
+              ),
             ],
           ),
         ),
